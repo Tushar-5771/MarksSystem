@@ -102,6 +102,36 @@ def updateMarks(request):
     List={
         'ErList': erList
     }
+
+    if request.method == 'POST' and request.POST.get('weeklySubmit') is not None:
+        erNo=request.POST.get('weeklyEr')
+        AP=request.POST.get('weeklyAP')
+        PDC=request.POST.get('weeklyPDC')
+        SE=request.POST.get('weeklySE')
+        WDD=request.POST.get('weeklyWDD')
+        if WDD == '':
+            WDD = None
+        elif AP == '':
+            AP = None
+        WeeklyData.objects.filter(ErNo__exact=str(erNo)).update(advancePython=AP,PDC=PDC,SE=SE,WDD=WDD)
+        
+        return render(request,'updateMarks.html',List)    
+
+    if request.method == 'POST' and request.POST.get('midSubmit') is not None:
+        erNo=request.POST.get('MidEr')
+        AP=request.POST.get('midAP')
+        PDC=request.POST.get('midPDC')
+        SE=request.POST.get('midSE')
+        WDD=request.POST.get('midWDD')
+        if WDD == '':
+            WDD = None
+        elif AP == '':
+            AP = None
+        
+        MidData.objects.filter(ErNo__exact=str(erNo)).update(advancePython=AP,PDC=PDC,SE=SE,WDD=WDD)
+
+        return render(request,'updateMarks.html',List)
+
     return render(request,'updateMarks.html',List)
 
 
