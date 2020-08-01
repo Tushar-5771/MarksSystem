@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="ltr">
+<!-- BEGIN: Head-->
+
+<head>
+    {% include 'Header.html' %}
+</head>
+<!-- END: Head-->
+
+<!-- BEGIN: Body-->
+
+<body class="vertical-layout vertical-menu-modern dark-layout 2-columns  navbar-floating footer-static  "
+    data-open="click" data-menu="vertical-menu-modern" data-col="2-columns" data-layout="dark-layout">
+
+    <!-- BEGIN: Header-->
+    {% include 'topNavBar.html' %}
+    <!-- END: Header-->
+    <!-- BEGIN: Main Menu-->
+    {% include 'leftMenu.html' %}
+    <!-- END: Main Menu-->
+
+    <!-- BEGIN: Content-->
+    <div class="app-content content">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper">
+            <div class="content-header row">
+            </div>
+            <div class="content-body">
+
+                <div class="card col-md-6 col-12 " >
+                <div class="card"></div>
+                    <div class="form-label-group form-group " style="color:white">
+                        <select class="form-control " name="ErNo" id="ErNo">
+                            <option disable selected>Enrollment Number</option>
+                            {% for Er in ErList %}
+                            <option>{{Er}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-12 col-md-12 col-sm-12">
+                    <div class="row">
+                        <div class="col-12 col-lg-12 col-md-12 col-sm-12 ">
+                            <div class="fonticon-wraps">
+
+                                <button type="button" name="Mid" onclick="showMid()"
+                                    style="margin-bottom: 15px;margin-right: 15px;"
+                                    class="btn btn-info btn-print mb-10 mb-md-10 col-lg-2 col-md-4 col-sm-6 float-right">
+
+                                    Mid
+
+                                </button>
+
+
+                                <button type="button" name="Weekly" onclick="showWeekly()"
+                                    style="margin-bottom: 15px;margin-right: 15px;"
+                                    class="btn btn-info btn-print mb-10 mb-md-10 col-lg-2 col-md-4 col-sm-6 float-right">
+
+                                    Weekly
+
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <form method="POST" action='updateMarks'>
+                    {% csrf_token %}
+                    <section id="Weekly" style="display:block">
+                        <div class="row match-height">
+                            <div class="col-12">
+                                <div class="card">
+                                    <script>
+                                        function showWeekly() {
+                                            var x = document.getElementById('Weekly');
+                                            var y = document.getElementById('Mid');
+                                            if (x.style.display === "none") {
+                                                y.style.display = "none";
+                                                x.style.display = "block";
+                                            }
+                                        }
+                                    </script>
+                                    <div class="card-header">
+                                        <h4 class="card-title">Update Weekly Marks</h4>
+                                    </div>
+                                    <div class="card-content">
+                                        <div class="card-body">
+                                            <form class="form">
+                                                <div class="form-body">
+                                                    <div class="row">
+                                                        <div class="col-md-6 col-12">
+                                                            <div class="form-label-group form-group">
+                                                                <fieldset>Advance Python</fieldset>
+                                                                <input type="text" id="weeklyAP" class="form-control"
+                                                                    placeholder="AP" name="weeklyAP">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 col-12">
+                                                            <div class="form-label-group form-group">
+                                                                <fieldset>Parallel and Distributed Computing</fieldset>
+                                                                <input type="text" id="weeklyPDC" class="form-control"
+                                                                    placeholder="PDC" name="weeklyPDC">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 col-12">
+                                                            <div class="form-label-group form-group">
+                                                                <fieldset>Software Engineering</fieldset>
+                                                                <input type="text" id="weeklySE" class="form-control"
+                                                                    placeholder="SE" name="weeklySE">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 col-12">
+                                                            <div class="form-label-group form-group">
+                                                                <fieldset>Web Designing and Development</fieldset>
+                                                                <input type="text" id="weeklyWDD" class="form-control"
+                                                                    placeholder="WDD" name="weeklyWDD">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 col-12">
+                                                            <div class="form-label-group form-group">
+                                                                <input type="hidden" id="weeklyEr" class="form-control"
+                                                                     name="weeklyEr">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <button type="submit" id='weeklySubmit' name='weeklySubmit'
+                                                                class="btn btn-success mr-1 mb-1">Update</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </form>
+
+                <form method="POST" action='updateMarks'>
+                    {% csrf_token %}
+                    <section id="Mid" style="display:none">
+                        <div class="row match-height">
+                            <div class="col-12">
+                                <div class="card">
+                                    <script>
+                                        function showMid() {
+                                            var x = document.getElementById('Weekly');
+                                            var y = document.getElementById('Mid');
+                                            if (y.style.display === "none") {
+                                                x.style.display = "none";
+                                                y.style.display = "block";
+                                            }
+                                        }
+                                    </script>
+                                    <div class="card-header">
+                                        <h4 class="card-title">Update Mid Marks</h4>
+                                    </div>
+                                    <div class="card-content">
+                                        <div class="card-body">
+                                            <form class="form">
+                                                <div class="form-body">
+                                                    <div class="row">
+                                                        <div class="col-md-6 col-12">
+                                                            <div class="form-label-group form-group">
+                                                                <fieldset>Advance Python</fieldset>
+                                                                <input type="text" id="midAP" class="form-control"
+                                                                    placeholder="AP" name="midAP">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 col-12">
+                                                            <div class="form-label-group form-group">
+                                                                <fieldset>Parallel and Distributed Computing</fieldset>
+                                                                <input type="text" id="midPDC" class="form-control"
+                                                                    placeholder="PDC" name="midPDC">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 col-12">
+                                                            <div class="form-label-group form-group">
+                                                                <fieldset>Software Engineering</fieldset>
+                                                                <input type="text" id="midSE" class="form-control"
+                                                                    placeholder="SE" name="midSE">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 col-12">
+                                                            <div class="form-label-group form-group">
+                                                                <fieldset>Web Designing and Development</fieldset>
+                                                                <input type="text" id="midWDD" class="form-control"
+                                                                    placeholder="WDD" name="midWDD">
+                                                            </div>
+                                                        </div>
+                                                         <div class="col-md-6 col-12">
+                                                            <div class="form-label-group form-group">
+                                                                <input type="hidden" id="MidEr" class="form-control"
+                                                                     name="MidEr">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12">
+                                                            <button type="submit" id='midSubmit' name='midSubmit'
+                                                                class="btn btn-success mr-1 mb-1">Update</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- END: Content-->
+
+
+    <!-- BEGIN: Footer-->
+    <!-- END: Footer-->
+
+
+    {% include 'Footer.html' %}
+</body>
+<!-- END: Body-->
+
+</html>
+
+<script>
+$(document).ready(function(){
+    $('#ErNo').change(function(){
+        var er=$('#ErNo').val();
+        //alert(er);
+        $('#weeklyEr,#MidEr').val(er);
+    });
+});
+</script>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="ltr">
+<!-- BEGIN: Head-->
+
+<head>
+    {% include 'Header.html' %}
+</head>
+<!-- END: Head-->
+
+<!-- BEGIN: Body-->
+
+<body class="vertical-layout vertical-menu-modern dark-layout 2-columns  navbar-floating footer-static  "
+    data-open="click" data-menu="vertical-menu-modern" data-col="2-columns" data-layout="dark-layout">
+
+    <!-- BEGIN: Header-->
+    {% include 'topNavBar.html' %}
+    <!-- END: Header-->
+    <!-- BEGIN: Main Menu-->
+    {% include 'leftMenu.html' %}
+    <!-- END: Main Menu-->
+
+    <!-- BEGIN: Content-->
+    <div class="app-content content">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper">
+            <div class="content-header row">
+            </div>
+            <div class="content-body">
+                <div class="col-12 col-lg-12 col-md-12 col-sm-12">
+                    <div class="row">
+                        <div class="col-12 col-lg-12 col-md-12 col-sm-12 ">
+                            <div class="fonticon-wraps">
+
+                                <button type="button" name="Mid" onclick="showMid()"
+                                    style="margin-bottom: 15px;margin-right: 15px;"
+                                    class="btn btn-info btn-print mb-10 mb-md-10 col-lg-2 col-md-4 col-sm-6 float-right">
+
+                                    Mid List
+
+                                </button>
+
+
+                                <button type="button" name="Weekly" onclick="showWeekly()"
+                                    style="margin-bottom: 15px;margin-right: 15px;"
+                                    class="btn btn-info btn-print mb-10 mb-md-10 col-lg-2 col-md-4 col-sm-6 float-right">
+
+                                    Weekly List
+
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <section id="Weekly-List" style="display:block">
+                    <div class="row match-height">
+                        <div class="col-12">
+                            <div class="card">
+                                <script>
+                                    function showWeekly() {
+                                        var x = document.getElementById('Weekly-List');
+                                        var y = document.getElementById('Mid-List');
+                                        if (x.style.display === "none") {
+                                            y.style.display = "none";
+                                            x.style.display = "block";
+                                        }
+                                    }
+                                </script>
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <div class="content-header row">
+                                            <div class="content-header-left col-md-9 col-12 mb-2">
+                                                <div class="row breadcrumbs-top">
+                                                    <div class="col-12">
+                                                        <h2 class="content-header-title float-left mb-0">Weekly Marks
+                                                            List</h2>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-body">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="card">
+                                                        <div class="card-content">
+                                                            <div class="card-body card-dashboard">
+                                                                <div class="table-responsive">
+                                                                    <table class="table zero-configuration dataTable">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Er No</th>
+                                                                                <th>AP</th>
+                                                                                <th>SE</th>
+                                                                                <th>PDC</th>
+                                                                                <th>WDD</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                        {% for data in weekly %}
+                                                                            <tr>
+                                                                                <td>{{data.ErNo}}</td>
+                                                                                <td>{{data.advancePython}}</td>
+                                                                                <td>{{data.PDC}}</td>
+                                                                                <td>{{data.SE}}</td>
+                                                                                <td>{{data.WDD}}</td>
+                                                                            </tr>
+                                                                        {% endfor %}
+                                                                        </tbody>
+
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                
+
+                <section id="Mid-List" style="display:none">
+                    <div class="row match-height">
+                        <div class="col-12">
+                            <div class="card">
+                               <script>
+                                            function showMid() {
+                                                var x = document.getElementById('Weekly-List');
+                                                var y = document.getElementById('Mid-List');
+                                                if (y.style.display === "none") {
+                                                    x.style.display = "none";
+                                                    y.style.display = "block";
+                                                }
+                                            }
+                                        </script>
+                                <div class="card-content">
+                                    <div class="card-body">
+                                        <div class="content-header row">
+                                            <div class="content-header-left col-md-9 col-12 mb-2">
+                                                <div class="row breadcrumbs-top">
+                                                    <div class="col-12">
+                                                        <h2 class="content-header-title float-left mb-0">Mid Marks
+                                                            List</h2>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-body">
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <div class="card">
+                                                        <div class="card-content">
+                                                            <div class="card-body card-dashboard">
+                                                                <div class="table-responsive">
+                                                                    <table class="table zero-configuration dataTable">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Er No</th>
+                                                                                <th>AP</th>
+                                                                                <th>SE</th>
+                                                                                <th>PDC</th>
+                                                                                <th>WDD</th>
+
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody>
+                                                                        {% for data in mid %}
+                                                                            <tr>
+                                                                                <td>{{data.ErNo}}</td>
+                                                                                <td>{{data.advancePython}}</td>
+                                                                                <td>{{data.SE}}</td>
+                                                                                <td>{{data.PDC}}</td>
+                                                                                <td>{{data.WDD}}</td>
+                                                                            </tr>
+                                                                        {% endfor %}
+                                                                        </tbody>
+
+                                                                    </table>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+    </div>
+    <!-- END: Content-->
+
+
+    <!-- BEGIN: Footer-->
+    <!-- END: Footer-->
+
+
+    {% include 'Footer.html' %}
+</body>
+<!-- END: Body-->
+
+</html>
