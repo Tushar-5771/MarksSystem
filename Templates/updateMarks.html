@@ -229,10 +229,25 @@
 
 <script>
 $(document).ready(function(){
+    var token='{{csrf_token}}';
     $('#ErNo').change(function(){
         var er=$('#ErNo').val();
-        //alert(er);
         $('#weeklyEr,#MidEr').val(er);
+        $.ajax({
+            headers: { "X-CSRFToken": token },
+            type:"POST",
+            url:"getData",
+            dataType:"JSON",
+            data:{Enrollment:er},
+            success:function(Received){
+                if (Received.Status == 'ok'){
+                    $('#weeklyAP').val(Received.Wap)
+                    $('#weeklyPDC').val(Received.Wpdc)
+                    $('#weeklySE').val(Received.Wse)
+                    $('#weeklyWDD').val(Received.Wwdd)
+                }
+            }
+        });
     });
 });
 </script>

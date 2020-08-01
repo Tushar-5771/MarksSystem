@@ -2,6 +2,7 @@ from django.shortcuts import render,HttpResponse,redirect
 from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 from .models import WeeklyData,MidData
+import json
 
 # Create your views here.
 def Index(request):
@@ -102,3 +103,29 @@ def updateMarks(request):
         'ErList': erList
     }
     return render(request,'updateMarks.html',List)
+
+
+def getMarks(request):
+    if request.user.is_anonymous:
+        return render(request,'index.html')
+
+    if request.method == 'POST' and request.POST.get("Enrollment") is not None:
+        mdM=MidData.objects.filter()
+        erNo=request.POST.get("Enrollment")
+        wkM=WeeklyData.objects.filter(ErNo__exact=str(erNo))
+        wkMCount=WeeklyData.objects.filter(ErNo__exact=str(erNo)).count()
+        # print(wkMCount)
+        if wkMCount>0:
+            ap=wkM[0].advancePython
+            pdc=wkM[0].PDC
+            se=wkM[0].SE
+            wdd=wkM[0].WDD
+            wL={'Wap':ap,'Wpdc':pdc,'Wse':se,'Wwdd':wdd}
+            wL['Status']='ok'
+            weeklyList=json.dumps(wL)
+            print(weeklyList)
+        else:
+            weeklyList={}
+        
+        return HttpResponse(weeklyList)
+    return HttpResponse('')
