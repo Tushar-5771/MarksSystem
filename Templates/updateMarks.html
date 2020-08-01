@@ -240,11 +240,28 @@ $(document).ready(function(){
             dataType:"JSON",
             data:{Enrollment:er},
             success:function(Received){
-                if (Received.Status == 'ok'){
-                    $('#weeklyAP').val(Received.Wap)
-                    $('#weeklyPDC').val(Received.Wpdc)
-                    $('#weeklySE').val(Received.Wse)
-                    $('#weeklyWDD').val(Received.Wwdd)
+                if (Received.weekly.Status == 'ok'){
+                    $('#weeklyAP').val(Received.weekly.Wap)
+                    $('#weeklyPDC').val(Received.weekly.Wpdc)
+                    $('#weeklySE').val(Received.weekly.Wse)
+                    $('#weeklyWDD').val(Received.weekly.Wwdd)
+                }else{
+                    $('#weeklyAP').val('')
+                    $('#weeklyPDC').val('')
+                    $('#weeklySE').val('')
+                    $('#weeklyWDD').val('')   
+                }
+
+                if (Received.mid.Status == 'ok'){
+                    $('#midAP').val(Received.mid.Map)
+                    $('#midPDC').val(Received.mid.Mpdc)
+                    $('#midSE').val(Received.mid.Mse)
+                    $('#midWDD').val(Received.mid.Mwdd)
+                }else{
+                    $('#midAP').val('')
+                    $('#midPDC').val('')
+                    $('#midSE').val('')
+                    $('#midWDD').val('')   
                 }
             }
         });

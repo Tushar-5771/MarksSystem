@@ -110,11 +110,15 @@ def getMarks(request):
         return render(request,'index.html')
 
     if request.method == 'POST' and request.POST.get("Enrollment") is not None:
-        mdM=MidData.objects.filter()
+        
         erNo=request.POST.get("Enrollment")
+        #weekly Marks
         wkM=WeeklyData.objects.filter(ErNo__exact=str(erNo))
         wkMCount=WeeklyData.objects.filter(ErNo__exact=str(erNo)).count()
-        # print(wkMCount)
+        # Mid Marks
+        mdM=MidData.objects.filter(ErNo__exact=str(erNo))
+        MdCount=MidData.objects.filter(ErNo__exact=str(erNo)).count()
+
         if wkMCount>0:
             ap=wkM[0].advancePython
             pdc=wkM[0].PDC
@@ -122,10 +126,24 @@ def getMarks(request):
             wdd=wkM[0].WDD
             wL={'Wap':ap,'Wpdc':pdc,'Wse':se,'Wwdd':wdd}
             wL['Status']='ok'
-            weeklyList=json.dumps(wL)
-            print(weeklyList)
         else:
-            weeklyList={}
+            wL={}
+            wL['Status']=''
+
+        if MdCount>0:
+            ap=mdM[0].advancePython
+            pdc=mdM[0].PDC
+            se=mdM[0].SE
+            wdd=mdM[0].WDD
+            mL={'Map':ap,'Mpdc':pdc,'Mse':se,'Mwdd':wdd}
+            mL['Status']='ok'
+        else:
+            mL={}
+            mL['Status']=''
+
+        Data={"weekly":wL,"mid":mL}
+        DataDict=json.dumps(Data)
+
         
-        return HttpResponse(weeklyList)
+        return HttpResponse(DataDict)
     return HttpResponse('')
