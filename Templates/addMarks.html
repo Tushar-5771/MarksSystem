@@ -232,3 +232,43 @@
 
 </html>
 
+<script>
+$(document).ready(function(){
+    var token='{{csrf_token}}';
+    $('#weeklyErNo').change(function(){
+        var er=$('#weeklyErNo').val();
+        $('#weeklyErNo').val(er);
+        $.ajax({
+            headers: { "X-CSRFToken": token },
+            type:"POST",
+            url:"getData",
+            dataType:"JSON",
+            data:{addWeeklyEnrollment:er},
+            success:function(Received){
+                if (Received.Status == 'found'){
+                   alert('Entry is Already Done..');
+                   $('#weeklyErNo').prop("selectedIndex", 0);
+                }
+            }
+        });
+    });
+
+    $('#midErNo').change(function(){
+        var er=$('#midErNo').val();
+        $('#midErNo').val(er);
+        $.ajax({
+            headers: { "X-CSRFToken": token },
+            type:"POST",
+            url:"getData",
+            dataType:"JSON",
+            data:{addmidErNo:er},
+            success:function(Received){
+                if (Received.Status == 'found'){
+                   alert('Entry is Already Done..');
+                   $('#midErNo').prop("selectedIndex", 0);
+                }
+            }
+        });
+    });
+});
+</script>

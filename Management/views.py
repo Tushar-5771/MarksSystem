@@ -174,6 +174,34 @@ def getMarks(request):
         Data={"weekly":wL,"mid":mL}
         DataDict=json.dumps(Data)
 
-        
         return HttpResponse(DataDict)
+
+    if request.method == 'POST' and request.POST.get("addWeeklyEnrollment") is not None:
+        erNo=request.POST.get("addWeeklyEnrollment")
+        #weekly Marks
+        wkM=WeeklyData.objects.filter(ErNo__exact=str(erNo))
+        wkMCount=WeeklyData.objects.filter(ErNo__exact=str(erNo)).count()
+        wL={}
+        if wkMCount>0:
+            wL['Status']='found'
+        else:
+            wL['Status']=''
+
+        return HttpResponse(json.dumps(wL))
+
+
+    if request.method == 'POST' and request.POST.get("addmidErNo") is not None:
+        erNo=request.POST.get("addmidErNo")
+        # Mid Marks
+        mdM=MidData.objects.filter(ErNo__exact=str(erNo))
+        MdCount=MidData.objects.filter(ErNo__exact=str(erNo)).count()
+
+        mL={}
+        if MdCount>0:
+            mL['Status']='found'
+        else:
+            mL['Status']=''
+
+        return HttpResponse(json.dumps(mL))
+        
     return HttpResponse('')
