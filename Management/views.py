@@ -8,7 +8,7 @@ import json
 def Index(request):
     if request.user.is_anonymous:
         return render(request,'index.html')
-    return render(request,'dashBoard.html')
+    return render(request,'addMarks.html')
 
 def Home(request):
     if request.method == 'POST':
@@ -139,6 +139,7 @@ def getMarks(request):
     if request.user.is_anonymous:
         return render(request,'index.html')
 
+    #for update marks
     if request.method == 'POST' and request.POST.get("Enrollment") is not None:
         
         erNo=request.POST.get("Enrollment")
@@ -176,6 +177,7 @@ def getMarks(request):
 
         return HttpResponse(DataDict)
 
+    #for existin record in weeklly
     if request.method == 'POST' and request.POST.get("addWeeklyEnrollment") is not None:
         erNo=request.POST.get("addWeeklyEnrollment")
         #weekly Marks
@@ -189,9 +191,9 @@ def getMarks(request):
 
         return HttpResponse(json.dumps(wL))
 
-
+    #for existin record in mid
     if request.method == 'POST' and request.POST.get("addmidErNo") is not None:
-        erNo=request.POST.get("addmidErNo")
+        erNo=request.POST.get("addWeeklyEnrollment")
         # Mid Marks
         mdM=MidData.objects.filter(ErNo__exact=str(erNo))
         MdCount=MidData.objects.filter(ErNo__exact=str(erNo)).count()
