@@ -22,4 +22,14 @@ class MidData(models.Model):
 
     def __str__(self):
         return str(self.ErNo)
+
+
+class Student(models.Model):
+    Name = models.CharField(max_length=50)
+    ErNo = models.CharField(max_length=20)
+    BirthDate = models.DateField()
+
+    def __str__(self):
+        return str(self.ErNo)
+
     

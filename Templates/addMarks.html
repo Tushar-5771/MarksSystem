@@ -33,7 +33,7 @@
                             <div class="fonticon-wraps">
 
                                 <button type="button" name="Mid" onclick="showMid()"
-                                    style="margin-bottom: 15px;margin-right: 15px;"
+                                    style="margin-bottom: 15px;margin-right: 10px;"
                                     class="btn btn-info btn-print mb-10 mb-md-10 col-lg-2 col-md-4 col-sm-6 float-right">
 
                                     Mid
@@ -42,7 +42,7 @@
 
 
                                 <button type="button" name="Weekly" onclick="showWeekly()"
-                                    style="margin-bottom: 15px;margin-right: 15px;"
+                                    style="margin-bottom: 15px;margin-right: 10px;"
                                     class="btn btn-info btn-print mb-10 mb-md-10 col-lg-2 col-md-4 col-sm-6 float-right">
 
                                     Weekly
@@ -237,7 +237,7 @@ $(document).ready(function(){
     var token='{{csrf_token}}';
     $('#weeklyErNo').change(function(){
         var er=$('#weeklyErNo').val();
-        $('#weeklyErNo').val(er);
+    
         $.ajax({
             headers: { "X-CSRFToken": token },
             type:"POST",
@@ -245,9 +245,16 @@ $(document).ready(function(){
             dataType:"JSON",
             data:{addWeeklyEnrollment:er},
             success:function(Received){
-                if (Received.Status == 'found'){
-                   alert('Entry is Already Done..');
-                   $('#weeklyErNo').prop("selectedIndex", 0);
+                if (Received.Status == 'ok'){
+                    $('#weeklyAP').val(Received.Wap);
+                    $('#weeklyPDC').val(Received.Wpdc);
+                    $('#weeklySE').val(Received.Wse);
+                    $('#weeklyWDD').val(Received.Wwdd);
+                }else{
+                    $('#weeklyAP').val('');
+                    $('#weeklyPDC').val('');
+                    $('#weeklySE').val('');
+                    $('#weeklyWDD').val('');
                 }
             }
         });
@@ -255,7 +262,7 @@ $(document).ready(function(){
 
     $('#midErNo').change(function(){
         var er=$('#midErNo').val();
-        $('#midErNo').val(er);
+        
         $.ajax({
             headers: { "X-CSRFToken": token },
             type:"POST",
@@ -263,9 +270,16 @@ $(document).ready(function(){
             dataType:"JSON",
             data:{addmidErNo:er},
             success:function(Received){
-                if (Received.Status == 'found'){
-                   alert('Entry is Already Done..');
-                   $('#midErNo').prop("selectedIndex", 0);
+                if (Received.Status == 'ok'){
+                    $('#midAP').val(Received.Map)
+                    $('#midPDC').val(Received.Mpdc)
+                    $('#midSE').val(Received.Mse)
+                    $('#midWDD').val(Received.Mwdd)
+                }else{
+                    $('#midAP').val('')
+                    $('#midPDC').val('')
+                    $('#midSE').val('')
+                    $('#midWDD').val('')
                 }
             }
         });

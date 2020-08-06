@@ -7,7 +7,17 @@ import json
 # Create your views here.
 def Index(request):
     if request.user.is_anonymous:
-        return render(request,'index.html')
+        weekly=WeeklyData.objects.all()
+
+        mid=MidData.objects.all()
+
+        List={
+            'weekly': weekly,
+            'mid':mid
+        }
+
+        return render(request,'HomePage.html')
+
     return render(request,'addMarks.html')
 
 def Home(request):
@@ -75,7 +85,7 @@ def addMarks(request):
 
 def viewMarks(request):
     if request.user.is_anonymous:
-        return render(request,'index.html')
+        return render(request,'HomePage.html')
 
     weekly=WeeklyData.objects.all()
 
@@ -149,7 +159,7 @@ def getMarks(request):
         # Mid Marks
         mdM=MidData.objects.filter(ErNo__exact=str(erNo))
         MdCount=MidData.objects.filter(ErNo__exact=str(erNo)).count()
-
+        wL={}
         if wkMCount>0:
             ap=wkM[0].advancePython
             pdc=wkM[0].PDC
@@ -158,9 +168,9 @@ def getMarks(request):
             wL={'Wap':ap,'Wpdc':pdc,'Wse':se,'Wwdd':wdd}
             wL['Status']='ok'
         else:
-            wL={}
             wL['Status']=''
 
+        mL={}
         if MdCount>0:
             ap=mdM[0].advancePython
             pdc=mdM[0].PDC
@@ -169,7 +179,7 @@ def getMarks(request):
             mL={'Map':ap,'Mpdc':pdc,'Mse':se,'Mwdd':wdd}
             mL['Status']='ok'
         else:
-            mL={}
+            
             mL['Status']=''
 
         Data={"weekly":wL,"mid":mL}
@@ -177,7 +187,7 @@ def getMarks(request):
 
         return HttpResponse(DataDict)
 
-    #for existin record in weeklly
+    #for existing record in weeklly
     if request.method == 'POST' and request.POST.get("addWeeklyEnrollment") is not None:
         erNo=request.POST.get("addWeeklyEnrollment")
         #weekly Marks
@@ -185,22 +195,33 @@ def getMarks(request):
         wkMCount=WeeklyData.objects.filter(ErNo__exact=str(erNo)).count()
         wL={}
         if wkMCount>0:
-            wL['Status']='found'
+            ap=wkM[0].advancePython
+            pdc=wkM[0].PDC
+            se=wkM[0].SE
+            wdd=wkM[0].WDD
+            wL={'Wap':ap,'Wpdc':pdc,'Wse':se,'Wwdd':wdd}
+            wL['Status']='ok'
         else:
             wL['Status']=''
 
         return HttpResponse(json.dumps(wL))
 
-    #for existin record in mid
+    #for existing record in mid
     if request.method == 'POST' and request.POST.get("addmidErNo") is not None:
-        erNo=request.POST.get("addWeeklyEnrollment")
+        erNo=request.POST.get("addmidErNo")
         # Mid Marks
+        print(erNo)
         mdM=MidData.objects.filter(ErNo__exact=str(erNo))
         MdCount=MidData.objects.filter(ErNo__exact=str(erNo)).count()
 
         mL={}
         if MdCount>0:
-            mL['Status']='found'
+            ap=mdM[0].advancePython
+            pdc=mdM[0].PDC
+            se=mdM[0].SE
+            wdd=mdM[0].WDD
+            mL={'Map':ap,'Mpdc':pdc,'Mse':se,'Mwdd':wdd}
+            mL['Status']='ok'
         else:
             mL['Status']=''
 
