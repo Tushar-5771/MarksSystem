@@ -16,7 +16,7 @@ def Index(request):
             'mid':mid
         }
 
-        return render(request,'HomePage.html')
+        return render(request,'HomePage.html',List)
 
     return render(request,'addMarks.html')
 
