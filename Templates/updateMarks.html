@@ -24,6 +24,12 @@
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
         <div class="content-wrapper">
+            {% if flage == 1 %}
+               <script>alert("Data is Updated Successfully....");</script>
+            {% endif %}
+            {% if  Mflage == 1 %}
+                <script>alert("Data is Updated Successfully....");</script>
+            {% endif %}
             <div class="content-header row">
             </div>
             <div class="content-body">
@@ -249,7 +255,7 @@ $(document).ready(function(){
                     $('#weeklyAP').val('')
                     $('#weeklyPDC').val('')
                     $('#weeklySE').val('')
-                    $('#weeklyWDD').val('')   
+                    $('#weeklyWDD').val('')
                 }
 
                 if (Received.mid.Status == 'ok'){
@@ -267,4 +273,6 @@ $(document).ready(function(){
         });
     });
 });
+
+
 </script>

@@ -24,6 +24,12 @@
         <div class="content-overlay"></div>
         <div class="header-navbar-shadow"></div>
         <div class="content-wrapper">
+            {% if flage == 1 %}
+                <script>alert("Data is Inserted Successfully....");</script>
+            {% endif %}
+            {% if Mflage == 1 %}
+                <script>alert("Data is Inserted Successfully....");</script>
+            {% endif %}
             <div class="content-header row">
             </div>
             <div class="content-body">
@@ -246,15 +252,8 @@ $(document).ready(function(){
             data:{addWeeklyEnrollment:er},
             success:function(Received){
                 if (Received.Status == 'ok'){
-                    $('#weeklyAP').val(Received.Wap);
-                    $('#weeklyPDC').val(Received.Wpdc);
-                    $('#weeklySE').val(Received.Wse);
-                    $('#weeklyWDD').val(Received.Wwdd);
-                }else{
-                    $('#weeklyAP').val('');
-                    $('#weeklyPDC').val('');
-                    $('#weeklySE').val('');
-                    $('#weeklyWDD').val('');
+                alert("Data is Already Entered..");
+                $('#weeklyErNo').prop('selectedIndex',0);
                 }
             }
         });
@@ -271,18 +270,13 @@ $(document).ready(function(){
             data:{addmidErNo:er},
             success:function(Received){
                 if (Received.Status == 'ok'){
-                    $('#midAP').val(Received.Map)
-                    $('#midPDC').val(Received.Mpdc)
-                    $('#midSE').val(Received.Mse)
-                    $('#midWDD').val(Received.Mwdd)
-                }else{
-                    $('#midAP').val('')
-                    $('#midPDC').val('')
-                    $('#midSE').val('')
-                    $('#midWDD').val('')
+                    alert("Data is Already Entered..");
+                    $('#midErNo').prop('selectedIndex',0);
                 }
             }
         });
     });
 });
+
+
 </script>

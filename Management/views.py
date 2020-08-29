@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 from .models import WeeklyData,MidData
 import json
+from django.contrib import messages
 
 # Create your views here.
 def Index(request):
@@ -15,10 +16,19 @@ def Index(request):
             'weekly': weekly,
             'mid':mid
         }
-
+        
         return render(request,'HomePage.html',List)
+    
+    erList=[]
+    
+    for i in range(170303108051,170303108061):
+        erList.append(i)
 
-    return render(request,'addMarks.html')
+    List={
+        'ErList': erList
+    }
+    
+    return render(request,'addMarks.html',List)
 
 def Home(request):
     if request.method == 'POST':
@@ -30,8 +40,11 @@ def Home(request):
             login(request,user)
             return redirect('/')
         else:
-            return render(request,'index.html')
-    return render(request,'index.html')
+            # messages.warning(request,"Either Username or Password is worng..")
+           
+            return render(request,'index.html',{'flag':1})
+            
+    return render(request,'index.html',{'flag':0})
     
 def userLogOut(request):
     logout(request)
@@ -61,7 +74,9 @@ def addMarks(request):
             AP = None
         data=WeeklyData(ErNo=erNo,advancePython=AP,PDC=PDC,SE=SE,WDD=WDD)
         data.save()
-        
+       
+        # messages.success(request,'Data is Inserted Successfully....')
+        List['flage']=1
         return render(request,'addMarks.html',List)    
 
     if request.method == 'POST' and request.POST.get('midSubmit') is not None:
@@ -77,7 +92,8 @@ def addMarks(request):
 
         data=MidData(ErNo=erNo,advancePython=AP,PDC=PDC,SE=SE,WDD=WDD)
         data.save()
-
+        # messages.success(request,'Data is Inserted Successfully....')
+        List['Mflage']=1
         return render(request,'addMarks.html',List)
 
 
@@ -85,7 +101,7 @@ def addMarks(request):
 
 def viewMarks(request):
     if request.user.is_anonymous:
-        return render(request,'HomePage.html')
+        return render(request,'index.html')
 
     weekly=WeeklyData.objects.all()
 
@@ -125,6 +141,8 @@ def updateMarks(request):
             AP = None
         WeeklyData.objects.filter(ErNo__exact=str(erNo)).update(advancePython=AP,PDC=PDC,SE=SE,WDD=WDD)
         
+        messages.success(request,'Data is Updated Successfully....')
+        List['flage']=1
         return render(request,'updateMarks.html',List)    
 
     if request.method == 'POST' and request.POST.get('midSubmit') is not None:
@@ -140,6 +158,8 @@ def updateMarks(request):
         
         MidData.objects.filter(ErNo__exact=str(erNo)).update(advancePython=AP,PDC=PDC,SE=SE,WDD=WDD)
 
+        messages.success(request,'Data is Updated Successfully....')
+        List['Mflage']=1
         return render(request,'updateMarks.html',List)
 
     return render(request,'updateMarks.html',List)
@@ -195,18 +215,18 @@ def getMarks(request):
         wkMCount=WeeklyData.objects.filter(ErNo__exact=str(erNo)).count()
         wL={}
         if wkMCount>0:
-            ap=wkM[0].advancePython
-            pdc=wkM[0].PDC
-            se=wkM[0].SE
-            wdd=wkM[0].WDD
-            wL={'Wap':ap,'Wpdc':pdc,'Wse':se,'Wwdd':wdd}
+            # ap=wkM[0].advancePython
+            # pdc=wkM[0].PDC
+            # se=wkM[0].SE
+            # wdd=wkM[0].WDD
+            # wL={'Wap':ap,'Wpdc':pdc,'Wse':se,'Wwdd':wdd}
             wL['Status']='ok'
         else:
             wL['Status']=''
-
+        # messages.info(request,"Data is Already Enterd..")
         return HttpResponse(json.dumps(wL))
 
-    #for existing record in mid
+    #for existing record in mid 
     if request.method == 'POST' and request.POST.get("addmidErNo") is not None:
         erNo=request.POST.get("addmidErNo")
         # Mid Marks
@@ -216,11 +236,11 @@ def getMarks(request):
 
         mL={}
         if MdCount>0:
-            ap=mdM[0].advancePython
-            pdc=mdM[0].PDC
-            se=mdM[0].SE
-            wdd=mdM[0].WDD
-            mL={'Map':ap,'Mpdc':pdc,'Mse':se,'Mwdd':wdd}
+            # ap=mdM[0].advancePython
+            # pdc=mdM[0].PDC
+            # se=mdM[0].SE
+            # wdd=mdM[0].WDD
+            # mL={'Map':ap,'Mpdc':pdc,'Mse':se,'Mwdd':wdd}
             mL['Status']='ok'
         else:
             mL['Status']=''
